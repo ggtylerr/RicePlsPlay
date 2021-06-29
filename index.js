@@ -76,7 +76,7 @@ app.post('/suggest', jsonParser, (req,res) => {
     "down": 0,
     "whoup": [],
     "whodown": [],
-    "i": d.s.length
+    "i": d.s.length - 1
   }
   if (req.body.link !== '') {
     a.link = req.body.link;
