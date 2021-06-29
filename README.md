@@ -68,8 +68,10 @@ nice
 ```
 
 ## TODO
+* **_CLEAN AND COMMENT CODE_**
 * Try and add oauth to API
 * Add panel for allowed users
+* Add editing
 
 ## Licensing
 This project is under the WTFPL, which lets you do what the fuck you want to.
