@@ -43,7 +43,7 @@
         data: data,
         success: data => {
           if (data == "nice") {
-            location.reload(true);
+            location.reload();
           } else if (data == "!url") {
             alert("The URL entered is not valid.");
           } else if (data == "!name") {
@@ -66,7 +66,7 @@
         data: `{"i":"${i}","id":"${id}"}`,
         success: data => {
           if (data == "nice") {
-            location.reload(true);
+            location.reload();
           }
           else {
             console.error(data);
@@ -83,7 +83,7 @@
         data: `{"i":"${i}","id":"${id}"}`,
         success: data => {
           if (data == "nice") {
-            location.reload(true);
+            location.reload();
           }
           else {
             console.error(data);
