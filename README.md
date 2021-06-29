@@ -26,8 +26,11 @@ A very scuffed suggestion system for Catdrgn's streams
 }
 ```
 You can make an O-Auth application [by going here.](https://discord.com/developers/applications)
+
 2. Install [node.js.](https://nodejs.org/en/)
+
 3. Run `npm install` in command prompt / terminal.
+
 4. Run `node index.js`
 
 ## API Endpoints
