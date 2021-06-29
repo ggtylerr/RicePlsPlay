@@ -55,6 +55,9 @@
         }
       });
     }
+    function sort() {
+      window.location.href = `${window.location.pathname}?sort=${$("#sort :selected").val()}`
+    }
     function up(i,id) {
       $.ajax({
         type: "POST",
@@ -106,27 +109,40 @@
   </div>
   <div>
     <h2>Suggestions</h2>
-    <% for(var i = 0; i < suggestions.s.length; i++) { %>
+    <p>
+      Sort by <select id="sort">
+        <option value="0">Default (Request date)</option>
+        <option value="1">Reverse Default</option>
+        <option value="2">Alphabetical</option>
+        <option value="3">Reverse Alphabetical</option>
+        <option value="4">Alphabetical (Name)</option>
+        <option value="5">Reverse Alphabetical (Name)</option>
+        <option value="6">Most upvoted</option>
+        <option value="7">Most downvoted</option>
+      </select>
+      <input type="button" onclick="sort()" value="Go!"></input>
+    </p>
+    <% for(var i = 0; i < suggestions.length; i++) { %>
     <div class="s">
-      <% if (suggestions.s[i].link !== undefined) { %>
-      <h3><a href=<%= suggestions.s[i].link %>><%= suggestions.s[i].name %></a></h3>
+      <% if (suggestions[i].link !== undefined) { %>
+      <h3><a href=<%= suggestions[i].link %>><%= suggestions[i].name %></a></h3>
       <% } else { %>
-      <h3><%= suggestions.s[i].name %></h3>
+      <h3><%= suggestions[i].name %></h3>
       <% } %>
-      <p>Suggested by <%= suggestions.s[i].user %></p>
+      <p>Suggested by <%= suggestions[i].user %></p>
       <p><b>
-        <input class="up reddit" type="button" onclick="up('<%= i %>', '<%= disc.id %>');"></input> 
-        <% if (suggestions.s[i].whoup.includes(disc.id)) { %>
-        <span style="color:red">[<%= suggestions.s[i].up %>]</span> / 
+        <input class="up reddit" type="button" onclick="up('<%= suggestions[i].i %>', '<%= disc.id %>');"></input> 
+        <% if (suggestions[i].whoup.includes(disc.id)) { %>
+        <span style="color:red">[<%= suggestions[i].up %>]</span> / 
         <% } else { %>
-        <span style="color:red"><%= suggestions.s[i].up %></span> / 
+        <span style="color:red"><%= suggestions[i].up %></span> / 
         <% } %>
-        <% if (suggestions.s[i].whodown.includes(disc.id)) { %>
-        <span style="color:blue">[<%= suggestions.s[i].down %>]</span> 
+        <% if (suggestions[i].whodown.includes(disc.id)) { %>
+        <span style="color:blue">[<%= suggestions[i].down %>]</span> 
         <% } else { %>
-        <span style="color:blue"><%= suggestions.s[i].down %></span>
+        <span style="color:blue"><%= suggestions[i].down %></span>
         <% } %>
-        <input class="down reddit" type="button" onclick="down('<%= i %>', '<%= disc.id %>');"></input> 
+        <input class="down reddit" type="button" onclick="down('<%= suggestions[i].i %>', '<%= disc.id %>');"></input> 
         <input class="gold reddit" type="button" onclick="alert('Thanks for the gold, kind stranger!');"></input>
       </b></p>
     </div>

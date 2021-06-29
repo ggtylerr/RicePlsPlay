@@ -75,3 +75,5 @@ nice
 
 ## Licensing
 This project is under the WTFPL, which lets you do what the fuck you want to.
+
+This project also used [DorZ23's Express Discord OAuth 2 example,](https://github.com/DorZ23/express-discord-oauth2) and [here's their license.](https://github.com/DorZ23/express-discord-oauth2/blob/master/LICENSE)

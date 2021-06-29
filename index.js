@@ -8,6 +8,7 @@ app.use(require('express-session')(config.session));
 const bodyParser = require('body-parser');
 const jsonParser = bodyParser.json();
 const fs = require('fs');
+const {sort} = require('./util/sort');
 
 let pubdir = __dirname + '/public';
 
@@ -22,7 +23,12 @@ app.get('/', async (req, resp) => {
         return resp.redirect('/login') // Redirect to login page
 
     app.locals.disc = json;
-    app.locals.suggestions = require('./public/suggestions.json');
+
+    const s = require('./public/suggestions.json');
+    let a = req.query.sort;
+    if (a === undefined) a = 0;
+
+    app.locals.suggestions = sort(s.s,a);
 
     resp.render('index.ejs');
 
@@ -69,7 +75,8 @@ app.post('/suggest', jsonParser, (req,res) => {
     "up": 0,
     "down": 0,
     "whoup": [],
-    "whodown": []
+    "whodown": [],
+    "i": d.s.length
   }
   if (req.body.link !== '') {
     a.link = req.body.link;
