@@ -6,105 +6,23 @@
   <meta content="Rice Pls Play™" property="og:title" />
   <meta content="Send and vote on suggestions here, and hope reece plays them on stream" property="og:description" />
   <meta content="#dda22c" name="theme-color" />
-  <style>
-    .up {
-      background-image: url('https://toppng.com/public/uploads/preview/reddit-clipart-icon-reddit-upvote-transparent-11562895696nryk8bvsps.png');
-    }
-    .down {
-      background-image: url('https://www.vhv.rs/dpng/d/127-1278380_reddit-downvote-transparent-hd-png-download.png');
-    }
-    .gold {
-      background-image: url('https://i.redd.it/4osxoc5mp5h21.jpg');
-    }
-    input[type=button].reddit {
-      cursor: pointer;
-      background-size: cover;
-      border: none;
-      width: 20px;
-      height: 20px;
-    }
-  </style>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fjalla+One&display=swap" rel="stylesheet">
+  <link href="/style.css" rel="stylesheet" type="text/css" />
   <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
-  <script>
-    function clean(a) {
-      return a.replace(/\\/g,"\\\\");
-    }
-    function s(id) {
-      var data = "";
-      if ($("s-link").val == "") {
-        data = `{"name":"${clean($("#s-name").val())}","user":"${clean(id)}"}`
-      } else {
-        data = `{"name":"${clean($("#s-name").val())}","link":"${clean($("#s-link").val())}","user":"${clean(id)}"}`
-      }
-      $.ajax({
-        type: "POST",
-        url: "/suggest",
-        contentType: 'application/json',
-        data: data,
-        success: data => {
-          if (data == "nice") {
-            location.reload();
-          } else if (data == "!url") {
-            alert("The URL entered is not valid.");
-          } else if (data == "!name") {
-            alert("The name entered is the same / similar to one already suggested.");
-          } else {
-            console.error(data);
-            alert("Error. Check console for details.");
-          }
-        }
-      });
-    }
-    function sort() {
-      window.location.href = `${window.location.pathname}?sort=${$("#sort :selected").val()}`
-    }
-    function up(i,id) {
-      $.ajax({
-        type: "POST",
-        url: "/up",
-        contentType: 'application/json',
-        data: `{"i":"${i}","id":"${id}"}`,
-        success: data => {
-          if (data == "nice") {
-            location.reload();
-          }
-          else {
-            console.error(data);
-            alert("Error. Check console for details.");
-          }
-        }
-      });
-    }
-    function down(i,id) {
-      $.ajax({
-        type: "POST",
-        url: "/down",
-        contentType: 'application/json',
-        data: `{"i":"${i}","id":"${id}"}`,
-        success: data => {
-          if (data == "nice") {
-            location.reload();
-          }
-          else {
-            console.error(data);
-            alert("Error. Check console for details.");
-          }
-        }
-      });
-    }
-  </script>
+  <script src="/script.js"></script>
 </head>
 
 <body>
   <div>
     <h1>Rice Pls Play™</h1>
-    <p><b><i>the website looks ugly rn sorry ill fix it up later</i></b></p>
     <p>Currently logged in as: <%= disc.username %>#<%= disc.discriminator %> If you want to log in as someone else, <a href="/login">click here.</a> Please don't use alts to get more votes though ;(</p>
   </div>
-  <div>
+  <div class="suggest">
     <h2>Suggest stuff here</h2>
-    <p>Name: <input type="text" id="s-name"></input></p>
-    <p>Link (optional): <input type="text" id="s-link"></input></p>
+    <input type="text" id="s-name" placeholder="Name"></input>
+    <input type="text" id="s-link" placeholder="Link (optional)"></input>
     <input type="button" onclick="s('<%= disc.username %>#<%= disc.discriminator %>')" value="Go!"></input>
   </div>
   <div>
@@ -122,6 +40,8 @@
       </select>
       <input type="button" onclick="sort()" value="Go!"></input>
     </p>
+  </div>
+  <div class="suggestions">
     <% for(var i = 0; i < suggestions.length; i++) { %>
     <div class="s">
       <% if (suggestions[i].link !== undefined) { %>
@@ -133,14 +53,14 @@
       <p><b>
         <input class="up reddit" type="button" onclick="up('<%= suggestions[i].i %>', '<%= disc.id %>');"></input> 
         <% if (suggestions[i].whoup.includes(disc.id)) { %>
-        <span style="color:red">[<%= suggestions[i].up %>]</span> / 
+        <span style="color:orange">[<%= suggestions[i].up %>]</span> / 
         <% } else { %>
-        <span style="color:red"><%= suggestions[i].up %></span> / 
+        <span style="color:orange"><%= suggestions[i].up %></span> / 
         <% } %>
         <% if (suggestions[i].whodown.includes(disc.id)) { %>
-        <span style="color:blue">[<%= suggestions[i].down %>]</span> 
+        <span style="color:skyblue">[<%= suggestions[i].down %>]</span> 
         <% } else { %>
-        <span style="color:blue"><%= suggestions[i].down %></span>
+        <span style="color:skyblue"><%= suggestions[i].down %></span>
         <% } %>
         <input class="down reddit" type="button" onclick="down('<%= suggestions[i].i %>', '<%= disc.id %>');"></input> 
         <input class="gold reddit" type="button" onclick="alert('Thanks for the gold, kind stranger!');"></input>

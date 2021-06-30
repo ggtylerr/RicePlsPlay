@@ -1,0 +1,92 @@
+html {
+  background-color: #0b0b15;
+  color: #fff;
+  font-family: 'Fjalla One', sans-serif;
+}
+a:link {color:#008CBA;}
+a:visited {color:#008CBA;}
+a:hover {color:skyblue;}
+a:active {color:#008CBA;}
+input {
+  background: none;
+  color: white;
+}
+input[type=button] {
+  border: #008CBA solid;
+  border-radius: 2px;
+  cursor: pointer;
+  transition-duration: 0.4s;
+}
+input[type=button]:hover {
+  background-color: #008CBA;
+}
+input[type=button]:focus {
+  background-color: #008CBA;
+  outline: none;
+}
+.suggest {
+  width: 100%;
+}
+.suggest input[type=text] {
+  border: none;
+  border-bottom: white solid;
+  margin-bottom: 5px;
+  width: calc(50% - 8px);
+}
+.suggest input[type=text]:focus {
+  outline: none;
+}
+.suggest input[type=button] {
+  border-radius: 10px;
+  height: 3em;
+  width: 100%;
+}
+select {
+  background: #0b0b15;
+  border: 2px solid #008CBA;
+  border-radius: 2px;
+  color: white;
+  transition-duration: 0.4s;
+}
+select:hover {
+  background: #008CBA;
+}
+select:focus {
+  background: #008CBA;
+  outline: none;
+}
+.up {
+  background-image: url('https://fiverr-res.cloudinary.com/images/t_main1,q_auto,f_auto/gigs/20691637/original/9c0720e7216da39c1fa320117e5f5645a44334d2/give-you-5-reddit-upvotes-and-a-comment.png');
+}
+.down {
+  background-image: url('https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/2a982ed2-e424-482a-b256-7817a545a638/d4iji5f-330ae548-e010-41aa-ab50-89af688c7a29.png/v1/fill/w_871,h_918,q_75,strp/descentia_cutie_mark_vector_by_gandodepth-d4iji5f.png?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwic3ViIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsImF1ZCI6WyJ1cm46c2VydmljZTppbWFnZS5vcGVyYXRpb25zIl0sIm9iaiI6W1t7InBhdGgiOiIvZi8yYTk4MmVkMi1lNDI0LTQ4MmEtYjI1Ni03ODE3YTU0NWE2MzgvZDRpamk1Zi0zMzBhZTU0OC1lMDEwLTQxYWEtYWI1MC04OWFmNjg4YzdhMjkucG5nIiwid2lkdGgiOiI8PTg3MSIsImhlaWdodCI6Ijw9OTE4In1dXX0.RNu_h1eyw7FW9pW1NxZDiZJn5zdTRzrQ8NP1cKJzIUo');
+}
+.gold {
+  background-image: url('https://www.redditstatic.com/desktop2x/img/gold/badges/award-gold-large.png');
+}
+input[type=button].reddit {
+  cursor: pointer;
+  background-size: cover;
+  background-color: transparent;
+  border: none;
+  width: 20px;
+  height: 20px;
+}
+.suggestions {
+  display: grid;
+  grid-gap: 5px;
+  grid-template-columns: repeat(auto-fill, 200px);
+  align-items: center;
+  justify-items: center;
+}
+@media only screen and (max-device-width: 400px) {
+  .suggestions {
+    grid-template-columns: repeat(auto-fill, 400px);
+  }
+}
+.s {
+  background-color:rgba(0,0,0,.25);
+  display: inline-block;
+  border: 1px solid #000;
+  padding: 5px;
+}

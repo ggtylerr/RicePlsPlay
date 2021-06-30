@@ -12,6 +12,8 @@ const {sort} = require('./util/sort');
 
 let pubdir = __dirname + '/public';
 
+app.use(express.static(pubdir));
+
 app.get('/', async (req, resp) => {
     if(!req.session.bearer_token)
         return resp.redirect('/login') // Redirect to login page
@@ -64,8 +66,6 @@ app.get('/login', (req, res) => {
                  `&redirect_uri=${encodeURIComponent(config.oauth2.redirect_uri)}` +
                  `&response_type=code&scope=${encodeURIComponent(config.oauth2.scopes.join(" "))}`)
 })
-
-app.get('/suggestions.json', (req,res) => res.sendFile(`${pubdir}/suggestions.json`));
 
 app.post('/suggest', jsonParser, (req,res) => {
   let d = require('./public/suggestions.json');
