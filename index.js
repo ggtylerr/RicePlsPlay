@@ -24,15 +24,27 @@ app.get('/', async (req, resp) => {
     if(!json.username) // This can happen if the Bearer token has expired or user has not given permission "indentity"
         return resp.redirect('/login') // Redirect to login page
 
+    app.locals.timestamp = (+new Date()).toString();
+
+    const a = require('./db/auth.json');
+    a[json.id] = app.locals.timestamp;
+
     app.locals.disc = json;
 
     const s = require('./public/suggestions.json');
-    let a = req.query.sort;
-    if (a === undefined) a = 0;
+    let t = req.query.sort;
+    if (t === undefined) t = 0;
 
-    app.locals.suggestions = sort(s.s,a);
+    app.locals.suggestions = sort(s.s,t);
 
-    resp.render('index.ejs');
+    fs.writeFile('./db/auth.json',JSON.stringify(a),function(err) {
+      if (err) {
+        console.error(err);
+        resp.send("Rip error\n" + err);
+      } else {
+        resp.render('index.ejs');
+      }
+    });
 
     // resp.send(`<h1>Hello, ${json.username}#${json.discriminator}!</h1>` +
     //           `<img src="https://cdn.discordapp.com/avatars/${json.id}/${json.avatar}?size=512">`) // Show user's nametag and avatar
@@ -68,6 +80,10 @@ app.get('/login', (req, res) => {
 })
 
 app.post('/suggest', jsonParser, (req,res) => {
+  let b = require('./db/auth.json');
+  if (b[req.body.id] != req.body.auth) {
+    return res.send("!auth");
+  }
   let d = require('./public/suggestions.json');
   let a = {
     "name": req.body.name,
@@ -111,6 +127,10 @@ app.post('/suggest', jsonParser, (req,res) => {
 })
 
 app.post('/up', jsonParser, (req,res) => {
+  let a = require('./db/auth.json');
+  if (a[req.body.id] != req.body.auth) {
+    return res.send("!auth");
+  }
   let d = require('./public/suggestions.json');
   if (!d.s[req.body.i].whoup.includes(req.body.id)) {
     if (d.s[req.body.i].whodown.includes(req.body.id)) {
@@ -133,6 +153,10 @@ app.post('/up', jsonParser, (req,res) => {
 })
 
 app.post('/down', jsonParser, (req,res) => {
+  let a = require('./db/auth.json');
+  if (a[req.body.id] != req.body.auth) {
+    return res.send("!auth");
+  }
   let d = require('./public/suggestions.json');
   if (!d.s[req.body.i].whodown.includes(req.body.id)) {
     if (d.s[req.body.i].whoup.includes(req.body.id)) {

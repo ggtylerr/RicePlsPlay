@@ -23,7 +23,7 @@
     <h2>Suggest stuff here</h2>
     <input type="text" id="s-name" placeholder="Name"></input>
     <input type="text" id="s-link" placeholder="Link (optional)"></input>
-    <input type="button" onclick="s('<%= disc.username %>#<%= disc.discriminator %>')" value="Go!"></input>
+    <input type="button" onclick="s('<%= disc.username %>#<%= disc.discriminator %>', '<%= disc.id %>', '<%= timestamp %>')" value="Go!"></input>
   </div>
   <div>
     <h2>Suggestions</h2>
@@ -51,7 +51,7 @@
       <% } %>
       <p>Suggested by <%= suggestions[i].user %></p>
       <p><b>
-        <input class="up reddit" type="button" onclick="up('<%= suggestions[i].i %>', '<%= disc.id %>');"></input> 
+        <input class="up reddit" type="button" onclick="up('<%= suggestions[i].i %>', '<%= disc.id %>', '<%= timestamp %>');"></input> 
         <% if (suggestions[i].whoup.includes(disc.id)) { %>
         <span style="color:orange">[<%= suggestions[i].up %>]</span> / 
         <% } else { %>
@@ -62,7 +62,7 @@
         <% } else { %>
         <span style="color:skyblue"><%= suggestions[i].down %></span>
         <% } %>
-        <input class="down reddit" type="button" onclick="down('<%= suggestions[i].i %>', '<%= disc.id %>');"></input> 
+        <input class="down reddit" type="button" onclick="down('<%= suggestions[i].i %>', '<%= disc.id %>', '<%= timestamp %>');"></input> 
         <input class="gold reddit" type="button" onclick="alert('Thanks for the gold, kind stranger!');"></input>
       </b></p>
     </div>

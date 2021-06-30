@@ -40,7 +40,8 @@ You can make an O-Auth application [by going here.](https://discord.com/develope
 Request:
 {
   "i": 1,
-  "id": "143117463788191746"
+  "id": "143117463788191746",
+  "auth": "956236140"
 }
 Response:
 nice
@@ -50,7 +51,8 @@ nice
 Request:
 {
   "i": 1,
-  "id": "143117463788191746"
+  "id": "143117463788191746",
+  "auth": "956236140"
 }
 Response:
 nice
@@ -61,7 +63,9 @@ Request:
 {
   "name": "Sakura Clicker",
   "link": "https://store.steampowered.com/app/383080/Sakura_Clicker/",
-  "user": "\\\\GGTyler\\\\#4480"
+  "user": "\\\\GGTyler\\\\#4480",
+  "id": "143117463788191746",
+  "auth": "956236140"
 }
 Response:
 nice
@@ -69,7 +73,6 @@ nice
 
 ## TODO
 * **_CLEAN AND COMMENT CODE_**
-* Try and add oauth to API
 * Add panel for allowed users
 * Add editing
 
