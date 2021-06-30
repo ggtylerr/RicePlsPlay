@@ -79,6 +79,10 @@ app.get('/login', (req, res) => {
                  `&response_type=code&scope=${encodeURIComponent(config.oauth2.scopes.join(" "))}`)
 });
 
+function clean(a) {
+  return a.replace(/\\/g,"\\\\");
+}
+
 app.post('/suggest', jsonParser, (req,res) => {
   let b = require('./db/auth.json');
   if (b[req.body.id] != req.body.auth) {
@@ -87,7 +91,7 @@ app.post('/suggest', jsonParser, (req,res) => {
   let d = require('./public/suggestions.json');
   let a = {
     "name": req.body.name,
-    "user": req.body.user,
+    "user": clean(req.body.user),
     "up": 0,
     "down": 0,
     "whoup": [],
@@ -206,7 +210,9 @@ app.post('/edit', jsonParser, (req,res) => {
   if (a == {}) {
     return res.send("!gone");
   }
-  a.name = req.body.name;
+  if (req.body.name !== '') {
+    a.name = req.body.name;
+  }
   if (req.body.link !== '') {
     a.link = req.body.link;
   } else {
