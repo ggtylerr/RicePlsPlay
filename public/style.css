@@ -64,6 +64,12 @@ select:focus {
 .gold {
   background-image: url('https://www.redditstatic.com/desktop2x/img/gold/badges/award-gold-large.png');
 }
+.edit {
+  background-image: url('https://clipground.com/images/edit-icon-png-white-1.png');
+}
+.remove {
+  background-image: url('https://iconsplace.com/wp-content/uploads/_icons/ffffff/256/png/trash-icon-18-256.png');
+}
 input[type=button].reddit {
   cursor: pointer;
   background-size: cover;
@@ -89,4 +95,18 @@ input[type=button].reddit {
   display: inline-block;
   border: 1px solid #000;
   padding: 5px;
+}
+.s div input[type=text] {
+  border: none;
+  border-bottom: white solid;
+  margin-bottom: 5px;
+  width: 100%;
+}
+.s div input[type=text]:focus {
+  outline: none;
+}
+.s div input[type=button] {
+  border-radius: 10px;
+  height: 3em;
+  width: 100%;
 }

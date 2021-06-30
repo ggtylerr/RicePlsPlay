@@ -48,7 +48,7 @@ app.get('/', async (req, resp) => {
 
     // resp.send(`<h1>Hello, ${json.username}#${json.discriminator}!</h1>` +
     //           `<img src="https://cdn.discordapp.com/avatars/${json.id}/${json.avatar}?size=512">`) // Show user's nametag and avatar
-})
+});
 
 app.get('/login/callback', async (req, resp) => {
     const accessCode = req.query.code;
@@ -77,7 +77,7 @@ app.get('/login', (req, res) => {
                  `?client_id=${config.oauth2.client_id}` +
                  `&redirect_uri=${encodeURIComponent(config.oauth2.redirect_uri)}` +
                  `&response_type=code&scope=${encodeURIComponent(config.oauth2.scopes.join(" "))}`)
-})
+});
 
 app.post('/suggest', jsonParser, (req,res) => {
   let b = require('./db/auth.json');
@@ -92,7 +92,7 @@ app.post('/suggest', jsonParser, (req,res) => {
     "down": 0,
     "whoup": [],
     "whodown": [],
-    "i": d.s.length
+    "i": d.s[d.s.length - 1].i + 1
   }
   if (req.body.link !== '') {
     a.link = req.body.link;
@@ -123,8 +123,8 @@ app.post('/suggest', jsonParser, (req,res) => {
       res.send(err);
     }
     res.send("nice");
-  })
-})
+  });
+});
 
 app.post('/up', jsonParser, (req,res) => {
   let a = require('./db/auth.json');
@@ -149,8 +149,8 @@ app.post('/up', jsonParser, (req,res) => {
       res.send(err);
     }
     res.send("nice");
-  })
-})
+  });
+});
 
 app.post('/down', jsonParser, (req,res) => {
   let a = require('./db/auth.json');
@@ -175,8 +175,88 @@ app.post('/down', jsonParser, (req,res) => {
       res.send(err);
     }
     res.send("nice");
-  })
-})
+  });
+});
+
+function copy(o) {
+  let c = {};
+  let k;
+  for (k in o) {
+    c[k] = o[k];
+  }
+  return c;
+}
+
+app.post('/edit', jsonParser, (req,res) => {
+  let b = require('./db/auth.json');
+  if (b[req.body.id] != req.body.auth) {
+    console.log(req.body.id);
+    return res.send("!auth");
+  }
+  let d = require('./public/suggestions.json');
+  let a = {};
+  let i = 0;
+  for (var j = 0; j < d.s.length; j++) {
+    i = j;
+    if (d.s[i].i == req.body.i) {
+      a = copy(d.s[i]);
+      break;
+    }
+  }
+  if (a == {}) {
+    return res.send("!gone");
+  }
+  a.name = req.body.name;
+  if (req.body.link !== '') {
+    a.link = req.body.link;
+  } else {
+    a.link = undefined;
+  }
+  for (var j = 0; j < d.s.length; j++) {
+    if ((d.s[j].name.toLowerCase() === a.name.toLowerCase()) && (i !== j)) {
+      return res.send("!name");
+    }
+  }
+  var urlptrn = new RegExp('^(https?:\\/\\/)?'+ // protocol
+  '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|'+ // domain name
+  '((\\d{1,3}\\.){3}\\d{1,3}))'+ // OR ip (v4) address
+  '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*'+ // port and path
+  '(\\?[;&a-z\\d%_.~+=-]*)?'+ // query string
+  '(\\#[-a-z\\d_]*)?$','i'); // fragment locator
+  if (a.link !== undefined) {
+    if (!urlptrn.test(a.link)) {
+      return res.send("!url");
+    }
+    if (!/^(https?:\/\/)/.test(a.link)) {
+      a.link = `http://${a.link}`
+    }
+  }
+  d.s[i] = a;
+  fs.writeFile('./public/suggestions.json',JSON.stringify(d),function(err) {
+    if (err) {
+      console.error(err);
+      res.send(err);
+    }
+    res.send("nice");
+  });
+});
+
+app.post('/remove', jsonParser, (req,res) => {
+  let a = require('./db/auth.json');
+  if (a[req.body.id] != req.body.auth) {
+    return res.send("!auth");
+  }
+  let d = require('./public/suggestions.json');
+  const i = d.s.indexOf(d.s[req.body.i]);
+  d.s.splice(i,1);
+  fs.writeFile('./public/suggestions.json',JSON.stringify(d),function(err) {
+    if (err) {
+      console.error(err);
+      res.send(err);
+    }
+    res.send("nice");
+  });
+});
 
 // Starting our application
 app.listen(config.port || 80, () => {

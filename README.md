@@ -70,11 +70,34 @@ Request:
 Response:
 nice
 ```
+`/edit` - Edits that suggestion
+```
+Request:
+{
+  "name": "Sakura Clicker",
+  "link": "https://store.steampowered.com/app/383080/Sakura_Clicker/",
+  "i": 999,
+  "id": "143117463788191746",
+  "auth": "956236140"
+}
+Response:
+nice
+```
+`/remove` - Removes that suggestion
+```
+Request:
+{
+  "i": 999,
+  "id": "143117463788191746",
+  "auth": "956236140"
+}
+Response:
+nice
+```
 
 ## TODO
 * **_CLEAN AND COMMENT CODE_**
 * Add panel for allowed users
-* Add editing
 
 ## Licensing
 This project is under the WTFPL, which lets you do what the fuck you want to.

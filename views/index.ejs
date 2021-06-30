@@ -43,7 +43,7 @@
   </div>
   <div class="suggestions">
     <% for(var i = 0; i < suggestions.length; i++) { %>
-    <div class="s">
+    <div class="s" id="<%= suggestions[i].i %>">
       <% if (suggestions[i].link !== undefined) { %>
       <h3><a href=<%= suggestions[i].link %>><%= suggestions[i].name %></a></h3>
       <% } else { %>
@@ -65,6 +65,13 @@
         <input class="down reddit" type="button" onclick="down('<%= suggestions[i].i %>', '<%= disc.id %>', '<%= timestamp %>');"></input> 
         <input class="gold reddit" type="button" onclick="alert('Thanks for the gold, kind stranger!');"></input>
       </b></p>
+      <% if (suggestions[i].user == `${disc.username}#${disc.discriminator}`) { %>
+      <p>
+        <input class="edit reddit" type="button" onclick="editshow('<%= suggestions[i].i %>', '<%= disc.id %>', '<%= timestamp %>');"></input>
+        <input class="remove reddit" type="button" onclick="remove('<%= suggestions[i].i %>', '<%= disc.id %>', '<%= timestamp %>');"></input> 
+        <span id="remove-<%= suggestions[i].i %>" style="visibility:hidden">You sure?</span>
+      </p>
+      <% } %>
     </div>
     <% } %>
   </div>
