@@ -22,7 +22,10 @@ A very scuffed suggestion system for Catdrgn's streams
         },
         "resave": true,
         "saveUninitialized": false
-    }
+    },
+    "admin": [
+      "143117463788191746"
+    ]
 }
 ```
 You can make an O-Auth application [by going here.](https://discord.com/developers/applications)
@@ -97,7 +100,6 @@ nice
 
 ## TODO
 * **_CLEAN AND COMMENT CODE_**
-* Add panel for allowed users
 
 ## Licensing
 This project is under the WTFPL, which lets you do what the fuck you want to.

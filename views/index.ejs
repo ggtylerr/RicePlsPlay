@@ -18,6 +18,11 @@
   <div>
     <h1>Rice Pls Play™</h1>
     <p>Currently logged in as: <%= disc.username %>#<%= disc.discriminator %> If you want to log in as someone else, <a href="/login">click here.</a> Please don't use alts to get more votes though ;(</p>
+    <% if (admin) { %>
+    <p><a href="?admin=0">Click here</a> to return to being a pleb.</p>
+    <% } else { %>
+    <p><a href="?admin=1">Click here</a> to use admin actions if you have access to them.</p>
+    <% } %>
   </div>
   <div class="suggest">
     <h2>Suggest stuff here</h2>
@@ -65,7 +70,7 @@
         <input class="down reddit" type="button" onclick="down('<%= suggestions[i].i %>', '<%= disc.id %>', '<%= timestamp %>');"></input> 
         <input class="gold reddit" type="button" onclick="alert('Thanks for the gold, kind stranger!');"></input>
       </b></p>
-      <% if (suggestions[i].user == `${disc.username}#${disc.discriminator}`) { %>
+      <% if ((suggestions[i].user == `${disc.username}#${disc.discriminator}`) || admin) { %>
       <p>
         <input class="edit reddit" type="button" onclick="editshow('<%= suggestions[i].i %>', '<%= disc.id %>', '<%= timestamp %>');"></input>
         <input class="remove reddit" type="button" onclick="remove('<%= suggestions[i].i %>', '<%= disc.id %>', '<%= timestamp %>');"></input> 

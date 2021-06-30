@@ -37,6 +37,12 @@ app.get('/', async (req, resp) => {
 
     app.locals.suggestions = sort(s.s,t);
 
+    app.locals.admin = false;
+    if (req.query.admin == "1") {
+      if (!config.admin.includes(json.id.toString())) return resp.send("You aren't authorized! Press Alt+Left to go back. Or the back button up there.");
+      app.locals.admin = true;
+    }
+
     fs.writeFile('./db/auth.json',JSON.stringify(a),function(err) {
       if (err) {
         console.error(err);
@@ -193,8 +199,7 @@ function copy(o) {
 
 app.post('/edit', jsonParser, (req,res) => {
   let b = require('./db/auth.json');
-  if (b[req.body.id] != req.body.auth) {
-    console.log(req.body.id);
+  if ((b[req.body.id] != req.body.auth) && !config.admin.includes(req.body.id)) {
     return res.send("!auth");
   }
   let d = require('./public/suggestions.json');
@@ -249,7 +254,7 @@ app.post('/edit', jsonParser, (req,res) => {
 
 app.post('/remove', jsonParser, (req,res) => {
   let a = require('./db/auth.json');
-  if (a[req.body.id] != req.body.auth) {
+  if (a[req.body.id] != req.body.auth && !config.admin.includes(req.body.id)) {
     return res.send("!auth");
   }
   let d = require('./public/suggestions.json');

@@ -29,8 +29,29 @@ function s(id,i,auth) {
     }
   });
 }
+function getUrlParameter(sParam) {
+  var sPageURL = window.location.search.substring(1),
+      sURLVariables = sPageURL.split('&'),
+      sParameterName,
+      i;
+
+  for (i = 0; i < sURLVariables.length; i++) {
+      sParameterName = sURLVariables[i].split('=');
+
+      if (sParameterName[0] === sParam) {
+          return typeof sParameterName[1] === undefined ? true : decodeURIComponent(sParameterName[1]);
+      }
+  }
+  return false;
+};
 function sort() {
-  window.location.href = `${window.location.pathname}?sort=${$("#sort :selected").val()}`
+  let p = "";
+  if (getUrlParameter('admin') == false) {
+    p = $.param({'sort':$("#sort :selected").val()});
+  } else {
+    p = $.param({'sort':$("#sort :selected").val(),'admin':getUrlParameter('admin')});
+  }
+  window.location.href = window.location.pathname + "?" + p;
 }
 function up(i,id,auth) {
   $.ajax({
